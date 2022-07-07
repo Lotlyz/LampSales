@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lotlyz.lampsales.dao.SaleDao">
+  <resultMap id="BaseResultMap" type="cn.lotlyz.lampsales.model.Sale">
+    <id column="sale_id" jdbcType="INTEGER" property="saleId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="lamp_id" jdbcType="INTEGER" property="lampId" />
+    <result column="buy_count" jdbcType="INTEGER" property="buyCount" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="total_money" jdbcType="VARCHAR" property="totalMoney" />
+  </resultMap>
+
+  <resultMap id="BaseResultMapVo" type="cn.lotlyz.lampsales.vo.SaleVo">
+    <id column="sale_id" jdbcType="INTEGER" property="saleId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="lamp_name" jdbcType="VARCHAR" property="lampName" />
+    <result column="buy_count" jdbcType="INTEGER" property="buyCount" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="total_money" jdbcType="VARCHAR" property="totalMoney" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sale_id, user_id, lamp_id, buy_count, address, total_money
+  </sql>
+  <select id="selectByAll" resultMap="BaseResultMap">
+    select * from sale
+  </select>
+  <select id="selectByAllVo" resultMap="BaseResultMapVo">
+    select
+      sale_id,
+      user_name,
+      lamp_name,
+      buy_count,
+      address,
+      total_money
+    FROM sale s INNER JOIN user u ON s.user_id=u.user_id INNER JOIN lamp l ON s.lamp_id=l.lamp_id
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sale
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sale
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.lotlyz.lampsales.model.Sale">
+    insert into sale (sale_id, user_id, lamp_id, 
+      buy_count, address, total_money
+      )
+    values (#{saleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{lampId,jdbcType=INTEGER}, 
+      #{buyCount,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{totalMoney,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.lotlyz.lampsales.model.Sale">
+    insert into sale
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="saleId != null">
+        sale_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="lampId != null">
+        lamp_id,
+      </if>
+      <if test="buyCount != null">
+        buy_count,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="totalMoney != null">
+        total_money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="saleId != null">
+        #{saleId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="lampId != null">
+        #{lampId,jdbcType=INTEGER},
+      </if>
+      <if test="buyCount != null">
+        #{buyCount,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMoney != null">
+        #{totalMoney,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.lotlyz.lampsales.model.Sale">
+    update sale
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="lampId != null">
+        lamp_id = #{lampId,jdbcType=INTEGER},
+      </if>
+      <if test="buyCount != null">
+        buy_count = #{buyCount,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMoney != null">
+        total_money = #{totalMoney,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.lotlyz.lampsales.model.Sale">
+    update sale
+    set user_id = #{userId,jdbcType=INTEGER},
+      lamp_id = #{lampId,jdbcType=INTEGER},
+      buy_count = #{buyCount,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      total_money = #{totalMoney,jdbcType=VARCHAR}
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </update>
+</mapper>

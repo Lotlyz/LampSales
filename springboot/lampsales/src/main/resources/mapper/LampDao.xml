@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lotlyz.lampsales.dao.LampDao">
+  <resultMap id="BaseResultMap" type="cn.lotlyz.lampsales.model.Lamp">
+    <id column="lamp_id" jdbcType="INTEGER" property="lampId" />
+    <result column="lamp_name" jdbcType="VARCHAR" property="lampName" />
+    <result column="lamp_brand" jdbcType="VARCHAR" property="lampBrand" />
+    <result column="lamp_power" jdbcType="VARCHAR" property="lampPower" />
+    <result column="lamp_price" jdbcType="VARCHAR" property="lampPrice" />
+    <result column="lamp_Inventory" jdbcType="VARCHAR" property="lampInventory" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    lamp_id, lamp_name, lamp_brand, lamp_power, lamp_price, lamp_Inventory
+  </sql>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from lamp
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lamp
+    where lamp_id = #{lampId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lamp
+    where lamp_id = #{lampId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.lotlyz.lampsales.model.Lamp">
+    insert into lamp (lamp_id, lamp_name, lamp_brand, 
+      lamp_power, lamp_price, lamp_Inventory
+      )
+    values (#{lampId,jdbcType=INTEGER}, #{lampName,jdbcType=VARCHAR}, #{lampBrand,jdbcType=VARCHAR}, 
+      #{lampPower,jdbcType=VARCHAR}, #{lampPrice,jdbcType=VARCHAR}, #{lampInventory,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.lotlyz.lampsales.model.Lamp">
+    insert into lamp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lampId != null">
+        lamp_id,
+      </if>
+      <if test="lampName != null">
+        lamp_name,
+      </if>
+      <if test="lampBrand != null">
+        lamp_brand,
+      </if>
+      <if test="lampPower != null">
+        lamp_power,
+      </if>
+      <if test="lampPrice != null">
+        lamp_price,
+      </if>
+      <if test="lampInventory != null">
+        lamp_Inventory,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lampId != null">
+        #{lampId,jdbcType=INTEGER},
+      </if>
+      <if test="lampName != null">
+        #{lampName,jdbcType=VARCHAR},
+      </if>
+      <if test="lampBrand != null">
+        #{lampBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="lampPower != null">
+        #{lampPower,jdbcType=VARCHAR},
+      </if>
+      <if test="lampPrice != null">
+        #{lampPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="lampInventory != null">
+        #{lampInventory,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.lotlyz.lampsales.model.Lamp">
+    update lamp
+    <set>
+      <if test="lampName != null">
+        lamp_name = #{lampName,jdbcType=VARCHAR},
+      </if>
+      <if test="lampBrand != null">
+        lamp_brand = #{lampBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="lampPower != null">
+        lamp_power = #{lampPower,jdbcType=VARCHAR},
+      </if>
+      <if test="lampPrice != null">
+        lamp_price = #{lampPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="lampInventory != null">
+        lamp_Inventory = #{lampInventory,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where lamp_id = #{lampId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.lotlyz.lampsales.model.Lamp">
+    update lamp
+    set lamp_name = #{lampName,jdbcType=VARCHAR},
+      lamp_brand = #{lampBrand,jdbcType=VARCHAR},
+      lamp_power = #{lampPower,jdbcType=VARCHAR},
+      lamp_price = #{lampPrice,jdbcType=VARCHAR},
+      lamp_Inventory = #{lampInventory,jdbcType=VARCHAR}
+    where lamp_id = #{lampId,jdbcType=INTEGER}
+  </update>
+</mapper>
