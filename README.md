@@ -34,8 +34,6 @@
 |JDK|1.8|
 |MySQL|8.0.20|
 |Node.js|14.17.2|
-|Elasticsearch|7.9.2|
-|RabbitMQ|3.8.5|
 
 
 # 快速开始
